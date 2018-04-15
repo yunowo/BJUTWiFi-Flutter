@@ -71,80 +71,82 @@ class _MyHomePageState extends State<MyHomePage> {
     return showDialog<Null>(
       context: context,
       barrierDismissible: true,
-      child: AlertDialog(
-        title: Text('用户'),
-        content: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: <Widget>[
-                TextFormField(
-                  initialValue: _username,
-                  decoration: InputDecoration(labelText: '用户名'),
-                  validator: (val) => val.isEmpty ? 'Username can\'t be empty.' : null,
-                  onSaved: (val) => _username = val,
-                ),
-                TextFormField(
-                  initialValue: _password,
-                  decoration: InputDecoration(labelText: '密码'),
-                  validator: (val) => val.isEmpty ? 'Password can\'t be empty.' : null,
-                  onSaved: (val) => _password = val,
-                  obscureText: true,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        '套餐',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(color: Color(0xFFBBBBBB), fontSize: 12.0),
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: Text('用户'),
+          content: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: <Widget>[
+                  TextFormField(
+                    initialValue: _username,
+                    decoration: InputDecoration(labelText: '用户名'),
+                    validator: (val) => val.isEmpty ? 'Username can\'t be empty.' : null,
+                    onSaved: (val) => _username = val,
+                  ),
+                  TextFormField(
+                    initialValue: _password,
+                    decoration: InputDecoration(labelText: '密码'),
+                    validator: (val) => val.isEmpty ? 'Password can\'t be empty.' : null,
+                    onSaved: (val) => _password = val,
+                    obscureText: true,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          '套餐',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Color(0xFFBBBBBB), fontSize: 12.0),
+                        ),
+                      ],
+                    ),
+                  ),
+                  DropdownButton<int>(
+                    value: _package,
+                    items: <DropdownMenuItem<int>>[
+                      DropdownMenuItem<int>(
+                        value: 8,
+                        child: Text("8 GB"),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 25,
+                        child: Text("25 GB"),
+                      ),
+                      DropdownMenuItem<int>(
+                        value: 30,
+                        child: Text("30 GB"),
                       ),
                     ],
+                    onChanged: (value) => _package = value,
                   ),
-                ),
-                DropdownButton<int>(
-                  value: _package,
-                  items: <DropdownMenuItem<int>>[
-                    DropdownMenuItem<int>(
-                      value: 8,
-                      child: Text("8 GB"),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 25,
-                      child: Text("25 GB"),
-                    ),
-                    DropdownMenuItem<int>(
-                      value: 30,
-                      child: Text("30 GB"),
-                    ),
-                  ],
-                  onChanged: (value) => _package = value,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text('取消'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          FlatButton(
-            child: Text('确定'),
-            onPressed: () {
-              final form = formKey.currentState;
-              if (form.validate()) {
-                form.save();
-                _setUser();
-              }
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('确定'),
+              onPressed: () {
+                final form = formKey.currentState;
+                if (form.validate()) {
+                  form.save();
+                  _setUser();
+                }
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
